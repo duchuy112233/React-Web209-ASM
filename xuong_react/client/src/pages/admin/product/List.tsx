@@ -1,9 +1,9 @@
 import {
-  Alert,
+ 
   Button,
   Container,
   Paper,
-  Snackbar,
+
   Stack,
   Table,
   TableBody,
@@ -18,9 +18,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmDialog from "src/components/ConfirmDialog";
 import Flash from "src/components/Flash";
+import { useLoading } from "src/contexts/loading";
 import { Product } from "src/types/Product";
 
 function AdminProductList() {
+  const { setLoading } = useLoading();
   const [showFlash, setShowFlash] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -28,10 +30,13 @@ function AdminProductList() {
 
   const getAllProduct = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get("/products");
       setProducts(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +93,7 @@ function AdminProductList() {
                     </TableCell>
                     <TableCell align="right">{product.price}</TableCell>
                     <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right">{product.image}</TableCell>
+                    <TableCell align="right"> <img src={product.image} width={100} alt="" /></TableCell>
                     <TableCell align="right">{product.category.name}</TableCell>
                     <TableCell align="right">
                       <Stack
@@ -96,7 +101,11 @@ function AdminProductList() {
                         gap={3}
                         justifyContent={"center"}
                       >
-                        <Link to={""}>Edit</Link>
+                        <Link to={`/admin/product/edit/${product._id}`}>
+                          <Button variant="contained" sx={{ bgcolor: "blue" }}>
+                            Edit
+                          </Button>
+                        </Link>
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "red" }}

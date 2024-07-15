@@ -1,21 +1,19 @@
-import { Stack } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import Header from "src/components/Header";
 import Loading from "src/components/Loading";
-import Sidebar from "src/components/Sidebar";
 import { useLoading } from "src/contexts/loading";
 
-function AdminLayout() {
+function ClientLayout() {
   const { loading } = useLoading();
 
   return (
     <>
       <Loading isShow={loading} />
-      <Stack direction={"row"} gap={2}>
-        <Sidebar />
-        <Outlet />
-      </Stack>
+      <Header />
+      
+      <Outlet />
     </>
   );
 }
 
-export default AdminLayout;
+export default ClientLayout;
