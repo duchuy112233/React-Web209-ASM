@@ -15,6 +15,7 @@ import {
   Select,
   MenuItem,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { Star } from "@mui/icons-material";
 import { Product } from "src/types/Product"; // Ensure Product type is imported correctly
@@ -60,7 +61,14 @@ function Detail() {
   };
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+        <CircularProgress color="primary" style={{ marginBottom: "10px" }} />
+        <Typography variant="body1" align="center">
+          Loading...
+        </Typography>
+      </div>
+    );
   }
 
   return (
