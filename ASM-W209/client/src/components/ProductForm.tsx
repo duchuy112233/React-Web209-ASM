@@ -23,12 +23,12 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
   const validate = (values: ProductFormParams) => {
     const { title, image, category, price } = values;
     const errors: ValidationErrors = {};
-    if (!title) errors.title = "Can nhap title vao";
+    if (!title) errors.title = "Cần nhập title vào";
     if (title && title.length < 6)
-      errors.title = "Can nhap toi thieu 6 ky tu vao";
-    if (!image) errors.image = "Can nhap image vao";
-    if (!category) errors.category = "Can nhap category vao";
-    if (!price) errors.price = "Can nhap price vao";
+      errors.title = "Cần nhập tối thiểu 6 ký tự vào";
+    if (!image) errors.image = "Cần nhập image vào";
+    if (!category) errors.category = "Cần nhập category vào";
+    if (!price) errors.price = "Cần nhập price vào";
     return errors;
   };
 
