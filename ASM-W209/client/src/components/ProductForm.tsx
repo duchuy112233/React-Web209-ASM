@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Checkbox,
@@ -11,8 +12,9 @@ import {
 } from "@mui/material";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
-import { ProductFormParams } from "src/types/Product";
+import { ProductFormParams, Category } from "src/types/Product";
 import { InputText } from "./elements/InputText";
+import useCategories from "src/pages/admin/hook/category";
 
 type ProductFormProps = {
   onSubmit: (values: ProductFormParams) => void;
@@ -23,29 +25,38 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
   const validate = (values: ProductFormParams) => {
     const { title, image, category, price } = values;
     const errors: ValidationErrors = {};
-    if (!title) errors.title = "Can nhap title vao";
-    if (title && title.length < 6)
-      errors.title = "Can nhap toi thieu 6 ky tu vao";
-    if (!image) errors.image = "Can nhap image vao";
-    if (!category) errors.category = "Can nhap category vao";
-    if (!price) errors.price = "Can nhap price vao";
+    if (!title) errors.title = "Cần nhập tiêu đề";
+    if (title && title.length < 6) errors.title = "Cần nhập tối thiểu 6 ký tự";
+    if (!image) errors.image = "Cần nhập ảnh";
+    if (!category) errors.category = "Cần nhập danh mục";
+    if (!price) errors.price = "Cần nhập giá";
     return errors;
   };
+
+  const { categories, loading, error } = useCategories();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <Form
       onSubmit={onSubmit}
       validate={validate}
       initialValues={initialValues}
-      render={({ values }) => {
+      render={({ handleSubmit, values }) => {
         return (
-          <Stack>
+          <Stack component="form" onSubmit={handleSubmit} spacing={2}>
             <Field
               name="title"
               render={({ input, meta }) => (
                 <InputText
                   input={input}
-                  label={"Title"}
+                  label="Tiêu đề"
                   messageError={meta.touched && meta.error}
                 />
               )}
@@ -55,7 +66,7 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
               render={({ input, meta }) => (
                 <InputText
                   input={input}
-                  label={"Image"}
+                  label="Ảnh"
                   messageError={meta.touched && meta.error}
                 />
               )}
@@ -65,7 +76,7 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
               render={({ input, meta }) => (
                 <InputText
                   input={input}
-                  label={"Description"}
+                  label="Mô tả"
                   messageError={meta.touched && meta.error}
                 />
               )}
@@ -75,7 +86,7 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
               render={({ input, meta }) => (
                 <InputText
                   input={input}
-                  label={"Price"}
+                  label="Giá"
                   messageError={meta.touched && meta.error}
                   type="number"
                 />
@@ -84,41 +95,33 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
             <Field<string>
               name="isShow"
               type="checkbox"
-              render={({ input, meta }) => {
-                return (
-                  <FormControlLabel
-                    control={<Checkbox {...input} />}
-                    label="Show Product"
-                  />
-                );
-              }}
+              render={({ input, meta }) => (
+                <FormControlLabel
+                  control={<Checkbox {...input} />}
+                  label="Hiển thị sản phẩm"
+                />
+              )}
             />
             <Field<string>
               name="category"
-              render={({ input, meta }) => {
-                return (
-                  <FormControl fullWidth>
-                    <InputLabel>Category</InputLabel>
-                    <Select label="Category" {...input} error>
-                      <MenuItem value="">Select</MenuItem>
-                      <MenuItem value={"66879becbac7f6bdb27eb74f"}>
-                        Thoi trang
-                      </MenuItem>
-                      <MenuItem value={"66879bf9bac7f6bdb27eb751"}>
-                        Phu Kien
-                      </MenuItem>
-                    </Select>
-                    {meta.touched && meta.error && (
-                      <FormHelperText>{meta.error}</FormHelperText>
-                    )}
-                  </FormControl>
-                );
-              }}
+              render={({ input, meta }) => (
+                <FormControl fullWidth error={meta.touched && !!meta.error}>
+                  <InputLabel>Danh mục</InputLabel>
+                  <Select native label="Danh mục" {...input}>
+                    <option value=""></option>
+                    {categories.map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </Select>
+                  {meta.touched && meta.error && (
+                    <FormHelperText>{meta.error}</FormHelperText>
+                  )}
+                </FormControl>
+              )}
             />
-
-            <Button type="submit" onClick={() => onSubmit(values)}>
-              Submit
-            </Button>
+            <Button type="submit">Gửi</Button>
           </Stack>
         );
       }}
