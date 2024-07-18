@@ -2,6 +2,7 @@ import { Button, Container, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
+import { useNavigate } from "react-router-dom";
 import { InputText } from "src/components/elements/InputText";
 import { MIN_PASSWORD } from "src/consts";
 
@@ -11,6 +12,7 @@ type LoginFormParams = {
 };
 
 const Login = () => {
+  const nav = useNavigate();
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
     const errors: ValidationErrors = {};
@@ -27,6 +29,7 @@ const Login = () => {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user)); // luu object
+      nav("/");
     } catch (error) {}
   };
 
