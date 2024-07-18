@@ -45,7 +45,7 @@ const Header = () => {
       </Stack>
       <Stack gap={"45px"} direction={"row"}>
         {/* icon  */}
-        <Link to="/admin">
+        <Link to="/register">
         <img src="./user.svg" alt="user" />
         </Link>
        
