@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductForm from "src/components/ProductForm";
 import { Product, ProductFormParams } from "src/types/Product";
+import Flash from "src/components/Flash";
 
 function AdminProductEdit() {
+  const [showFlash, setShowFlash] = useState(false);
   const nav = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState<Product | undefined>();
@@ -18,21 +20,29 @@ function AdminProductEdit() {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    if (!id) return;
+    if (!id) return; 
     getProduct(id);
   }, [id]);
 
   const onSubmit = async (values: ProductFormParams) => {
     try {
       await axios.put(`/products/${id}`, values);
-      nav("/admin/product/list");
-    } catch (error) {}
+      setShowFlash(true); // Show flash message after successful submit
+      setTimeout(() => {
+        nav("/admin/product/list");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
+     
       <Container>
+         <Flash isShow={showFlash} />
         <Stack gap={2}>
           <Typography variant="h3" textAlign={"center"}>
             Edit Product

@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import ProductForm from "src/components/ProductForm";
 import { useLoading } from "src/contexts/loading";
 import { ProductFormParams } from "src/types/Product";
-
+import Flash from "src/components/Flash";
+import { useState } from "react";
 function AdminProductAdd() {
+   const [showFlash, setShowFlash] = useState(false);
   const nav = useNavigate();
   const { setLoading } = useLoading();
 
@@ -13,7 +15,10 @@ function AdminProductAdd() {
     try {
       setLoading(true);
       await axios.post("/products", values);
-      nav("/admin/product/list");
+      setShowFlash(true); // Show flash message after successful submit
+      setTimeout(() => {
+        nav("/admin/product/list");
+      }, 1000);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -23,6 +28,7 @@ function AdminProductAdd() {
   return (
     <>
       <Container>
+      <Flash isShow={showFlash} />
         <Stack gap={2}>
           <Typography variant="h3" textAlign={"center"}>
             Add Product

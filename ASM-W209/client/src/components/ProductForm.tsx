@@ -121,7 +121,19 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
                 </FormControl>
               )}
             />
-            <Button type="submit">Gửi</Button>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                bgcolor: "#4caf50", // background color
+                color: "white", // text color
+                "&:hover": {
+                  bgcolor: "#388e3c", // darker background color on hover
+                },
+              }}
+            >
+              Gửi
+            </Button>
           </Stack>
         );
       }}

@@ -1,9 +1,7 @@
 import {
- 
   Button,
   Container,
   Paper,
-
   Stack,
   Table,
   TableBody,
@@ -61,10 +59,10 @@ function AdminProductList() {
 
   return (
     <>
-      <Container>
+      <>
         <Flash isShow={showFlash} />
         <Stack gap={2}>
-          <Typography variant="h2" textAlign={"center"}>
+          <Typography variant="h3" textAlign={"center"}>
             Product List
           </Typography>
           <Link to="/admin/product/add">
@@ -93,7 +91,10 @@ function AdminProductList() {
                     </TableCell>
                     <TableCell align="right">{product.price}</TableCell>
                     <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right"> <img src={product.image} width={100} alt="" /></TableCell>
+                    <TableCell align="right">
+                      {" "}
+                      <img src={product.image} width={100} alt="" />
+                    </TableCell>
                     <TableCell align="right">{product.category.name}</TableCell>
                     <TableCell align="right">
                       <Stack
@@ -126,7 +127,7 @@ function AdminProductList() {
             />
           </TableContainer>
         </Stack>
-      </Container>
+      </>
     </>
   );
 }

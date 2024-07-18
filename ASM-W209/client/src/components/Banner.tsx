@@ -12,7 +12,7 @@ const Banner = () => {
       <BannerImage>
         <Stack justifyContent={"center"} alignItems={"center"} height={"100%"}>
           <img />
-          <Typography fontSize={48}>Cart</Typography>
+          <Typography fontSize={48}>FURNIRO</Typography>
           <Stack direction={"row"}>
             <Typography fontWeight={500}>Home</Typography>
             <NavigateNextIcon />

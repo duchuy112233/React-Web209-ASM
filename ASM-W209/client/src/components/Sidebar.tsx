@@ -34,7 +34,7 @@ function Sidebar() {
     >
       {/* <Toolbar /> */}
       <Link to="/">
-        <img src="./logo.svg" alt="logo" />
+        <img src="./LogoFur.jpg" width={210} alt="logo" />
       </Link>
 
       <Divider />
