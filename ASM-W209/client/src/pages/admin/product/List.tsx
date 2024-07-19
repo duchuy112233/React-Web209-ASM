@@ -15,7 +15,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmDialog from "src/components/ConfirmDialog";
-import Flash from "src/components/Flash";
+import  {FlashDelete} from "src/components/Flash";
 import { useLoading } from "src/contexts/loading";
 import { Product } from "src/types/Product";
 import Pagination from "@mui/material/Pagination";
@@ -53,7 +53,12 @@ function AdminProductList() {
   const handleDelete = async () => {
     try {
       await axios.delete("/products/" + idDelete);
+     
       setShowFlash(true);
+      setTimeout(() => {
+        setShowFlash(false);
+      }, 2000);
+
       getAllProduct();
     } catch (error) {
       console.log(error);
@@ -71,24 +76,25 @@ function AdminProductList() {
 
   return (
     <>
-      <Flash isShow={showFlash} />
+      <FlashDelete isShow={showFlash} />
+
       <Stack gap={2} sx={{ padding: "20px" }}>
         <Typography variant="h3" textAlign="center">
-          Product List
+        PRODUCT LIST
         </Typography>
         <Link to="/admin/product/add">
-          <Button variant="contained">Add Product</Button>
+          <Button variant="contained">PRODUCT ADD</Button>
         </Link>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 1200 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Desc</TableCell>
-                <TableCell align="right">Image</TableCell>
-                <TableCell align="right">Category</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell>TITLE</TableCell>
+                <TableCell align="right">PRICE</TableCell>
+                <TableCell align="right">DESC</TableCell>
+                <TableCell align="right">IMAGE</TableCell>
+                <TableCell align="right">CATEGORY</TableCell>
+                <TableCell align="right">ACTIONS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

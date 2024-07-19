@@ -18,12 +18,12 @@ const Register = () => {
   const validate = (values: RegisterFormParams) => {
     const { username, email, password } = values;
     const errors: ValidationErrors = {};
-    if (!username) errors.username = "Can nhap username vao";
-    if (!email) errors.email = "Can nhap email vao";
+    if (!username) errors.username = "Username không được để trống";
+    if (!email) errors.email = "Email không được để trống";
 
-    if (!password) errors.password = "Can nhap password vao";
+    if (!password) errors.password = "Password không được để trống";
     if (password && password.length < MIN_PASSWORD)
-      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
+      errors.password = `Password tối thiểu ${MIN_PASSWORD} ký tự`;
     return errors;
   };
 

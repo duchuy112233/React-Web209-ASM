@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductForm from "src/components/ProductForm";
 import { Product, ProductFormParams } from "src/types/Product";
-import Flash from "src/components/Flash";
+import {FlashtUpdate} from "src/components/Flash";
 
 function AdminProductEdit() {
   const [showFlash, setShowFlash] = useState(false);
@@ -32,7 +32,7 @@ function AdminProductEdit() {
       setShowFlash(true); // Show flash message after successful submit
       setTimeout(() => {
         nav("/admin/product/list");
-      }, 1000);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
@@ -42,10 +42,10 @@ function AdminProductEdit() {
     <>
      
       <Container>
-         <Flash isShow={showFlash} />
+         <FlashtUpdate isShow={showFlash} />
         <Stack gap={2}>
           <Typography variant="h3" textAlign={"center"}>
-            Edit Product
+             PRODUCT EDIT
           </Typography>
           <ProductForm onSubmit={onSubmit} initialValues={product} />
         </Stack>

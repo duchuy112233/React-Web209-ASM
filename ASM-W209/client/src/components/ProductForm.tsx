@@ -25,13 +25,20 @@ function ProductForm({ onSubmit, initialValues }: ProductFormProps) {
   const validate = (values: ProductFormParams) => {
     const { title, image, category, price } = values;
     const errors: ValidationErrors = {};
+  
     if (!title) errors.title = "Cần nhập tiêu đề";
-    if (title && title.length < 6) errors.title = "Cần nhập tối thiểu 6 ký tự";
+    else if (title.length < 6) errors.title = "Cần nhập tối thiểu 6 ký tự";
+  
     if (!image) errors.image = "Cần nhập ảnh";
+  
     if (!category) errors.category = "Cần nhập danh mục";
+  
     if (!price) errors.price = "Cần nhập giá";
+    else if (price <= 0) errors.price = "Giá phải lớn hơn 0";
+  
     return errors;
   };
+  
 
   const { categories, loading, error } = useCategories();
 
