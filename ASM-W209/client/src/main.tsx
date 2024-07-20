@@ -11,15 +11,16 @@ axios.defaults.baseURL = "http://localhost:3000";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
+
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#F9F1E7", // Custom primary color
-    },
-    secondary: {
-      main: "#dc004e", // Custom secondary color
-    },
-  },
+  // palette: {
+  //   primary: {
+  //     main: "#F9F1E7", // Custom primary color
+  //   },
+  //   secondary: {
+  //     main: "#dc004e", // Custom secondary color
+  //   },
+  // },
   typography: {
     fontFamily: "Roboto, Arial, sans-serif",
   },
@@ -30,7 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <LoadingProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+         
+            <App />
+        
         </ThemeProvider>
       </LoadingProvider>
     </BrowserRouter>

@@ -33,39 +33,45 @@ export default function ConfirmDialog({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Xoas SP"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Xoá sản phẩm"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Ban co muon xoa san pham nay ko?
+          Bạn có muốn xoá sản phẩm này không?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <ButtonCancel onClick={handleClose}>Cancel</ButtonCancel>
-        <ButtonOk onClick={handleAgree} autoFocus>
+        <CancelButton onClick={handleClose}>Cancel</CancelButton>
+        <OkButton onClick={handleAgree} autoFocus>
           OK
-        </ButtonOk>
+        </OkButton>
       </DialogActions>
     </Dialog>
   );
 }
 
-const ButtonOk = styled(Button)({
-  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-  border: 0,
-  borderRadius: 10,
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+const OkButton = styled(Button)({
+  background: "linear-gradient(135deg, #ff4081 30%, #ff80ab 90%)",
+  borderRadius: 50,
   color: "white",
-  height: 48,
-  padding: "0 20px",
+  height: 40,
+  padding: "0 30px",
+  boxShadow: "0 4px 20px 0 rgba(255, 105, 135, 0.3)",
+  transition: "background 0.3s ease-in-out",
+  '&:hover': {
+    backgroundColor: '#ff80ab',
+  },
 });
 
-const ButtonCancel = styled(Button)(
-  () => `
-  background-color: #000;
-  color: #fff;
-  &:hover {
-    background-color: #000;
-    opacity: 0.6;
-  }
-  `
-);
+const CancelButton = styled(Button)({
+  backgroundColor: "#444",
+  color: "#fff",
+  height: 40,
+  padding: "0 30px",
+  borderRadius: 50,
+  boxShadow: "0 4px 20px 0 rgba(0, 0, 0, 0.2)",
+  transition: "background 0.3s ease-in-out, transform 0.3s ease-in-out",
+  '&:hover': {
+    backgroundColor: "#666",
+    transform: "scale(1.05)",
+  },
+});

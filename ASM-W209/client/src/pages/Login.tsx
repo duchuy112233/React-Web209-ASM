@@ -16,11 +16,11 @@ const Login = () => {
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
     const errors: ValidationErrors = {};
-    if (!email) errors.email = "Cần nhập email vào ";
+    if (!email) errors.email = "Email không được để trống";
 
-    if (!password) errors.password = "Cần nhập password vào";
+    if (!password) errors.password = "Password không được để trống";
     if (password && password.length < MIN_PASSWORD)
-      errors.password = `Cần nhập password tối thiểu ${MIN_PASSWORD} ký tự`;
+      errors.password = `Password tối thiểu ${MIN_PASSWORD} ký tự`;
     return errors;
   };
 
@@ -28,7 +28,6 @@ const Login = () => {
     try {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
       nav("/");
     } catch (error) {}
   };

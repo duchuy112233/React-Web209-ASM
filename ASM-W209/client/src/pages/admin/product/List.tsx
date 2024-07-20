@@ -1,9 +1,7 @@
 import {
- 
   Button,
   Container,
   Paper,
-
   Stack,
   Table,
   TableBody,
@@ -17,9 +15,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmDialog from "src/components/ConfirmDialog";
-import Flash from "src/components/Flash";
+import { FlashDelete } from "src/components/Flash";
 import { useLoading } from "src/contexts/loading";
 import { Product } from "src/types/Product";
+import Pagination from "@mui/material/Pagination";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminProductList() {
   const { setLoading } = useLoading();
@@ -27,6 +28,8 @@ function AdminProductList() {
   const [confirm, setConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [idDelete, setIdDelete] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [itemsPerPage] = useState(6); // Number of products per page
 
   const getAllProduct = async () => {
     try {
@@ -34,7 +37,11 @@ function AdminProductList() {
       const { data } = await axios.get("/products");
       setProducts(data);
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(`Error: ${error.response?.data?.message || error.message}`);
+      } else {
+        toast.error('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -52,81 +59,104 @@ function AdminProductList() {
   const handleDelete = async () => {
     try {
       await axios.delete("/products/" + idDelete);
-      setShowFlash(true);
+//////show lash
+      // setShowFlash(true);
+      // setTimeout(() => {
+      //   setShowFlash(false);
+      // }, 2000);
+      toast.success("Successfully deleted product");
       getAllProduct();
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(`Error: ${error.response?.data?.message || error.message}`);
+      } else {
+        toast.error('An unexpected error occurred');
+      }
     }
+  };
+
+  // Calculate the range of products to display based on current page
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = products.slice(startIndex, endIndex);
+
+  const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
+    setPage(newPage);
   };
 
   return (
     <>
-      <Container>
-        <Flash isShow={showFlash} />
-        <Stack gap={2}>
-          <Typography variant="h2" textAlign={"center"}>
-            Product List
-          </Typography>
-          <Link to="/admin/product/add">
-            <Button variant="contained">Add Product</Button>
-          </Link>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1200 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Title</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Desc</TableCell>
-                  <TableCell align="right">Image</TableCell>
-                  <TableCell align="right">Category</TableCell>
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {products.map((product, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {product.title}
-                    </TableCell>
-                    <TableCell align="right">{product.price}</TableCell>
-                    <TableCell align="right">{product.description}</TableCell>
-                    <TableCell align="right"> <img src={product.image} width={100} alt="" /></TableCell>
-                    <TableCell align="right">{product.category.name}</TableCell>
-                    <TableCell align="right">
-                      <Stack
-                        direction={"row"}
-                        gap={3}
-                        justifyContent={"center"}
-                      >
-                        <Link to={`/admin/product/edit/${product._id}`}>
-                          <Button variant="contained" sx={{ bgcolor: "blue" }}>
-                            Edit
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="contained"
-                          sx={{ bgcolor: "red" }}
-                          onClick={() => handleConfirm(product._id)}
-                        >
-                          Delete
+      <ToastContainer />
+      {/* <FlashDelete isShow={showFlash} /> */}
+
+      <Stack gap={2} sx={{ padding: "20px" }}>
+        <Typography variant="h3" textAlign="center">
+          PRODUCT LIST
+        </Typography>
+        <Link to="/admin/product/add">
+          <Button variant="contained">PRODUCT ADD</Button>
+        </Link>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 1200 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>TITLE</TableCell>
+                <TableCell align="right">PRICE</TableCell>
+                <TableCell align="right">DESC</TableCell>
+                <TableCell align="right">IMAGE</TableCell>
+                <TableCell align="right">CATEGORY</TableCell>
+                <TableCell align="right">ACTIONS</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentProducts.map((product, index) => (
+                <TableRow
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {product.title}
+                  </TableCell>
+                  <TableCell align="right">{product.price}</TableCell>
+                  <TableCell align="right">{product.description}</TableCell>
+                  <TableCell align="right">
+                    <img src={product.image} width={100} alt="" />
+                  </TableCell>
+                  <TableCell align="right">{product.category.name}</TableCell>
+                  <TableCell align="right">
+                    <Stack direction="row" gap={3} justifyContent="center">
+                      <Link to={`/admin/product/edit/${product._id}`}>
+                        <Button variant="contained" sx={{ bgcolor: "blue" }}>
+                          Edit
                         </Button>
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <ConfirmDialog
-              confirm={confirm}
-              onConfirm={setConfirm}
-              onDelete={handleDelete}
-            />
-          </TableContainer>
-        </Stack>
-      </Container>
+                      </Link>
+                      <Button
+                        variant="contained"
+                        sx={{ bgcolor: "red" }}
+                        onClick={() => handleConfirm(product._id)}
+                      >
+                        Delete
+                      </Button>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Pagination
+          count={Math.ceil(products.length / itemsPerPage)}
+          page={page}
+          onChange={handleChangePage}
+          color="primary"
+          sx={{ marginTop: "20px", alignSelf: "center" }}
+        />
+      </Stack>
+      <ConfirmDialog
+        confirm={confirm}
+        onConfirm={setConfirm}
+        onDelete={handleDelete}
+      />
     </>
   );
 }
