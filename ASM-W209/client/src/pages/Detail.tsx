@@ -62,7 +62,14 @@ function Detail() {
 
   if (!product) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "30px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "30px",
+        }}
+      >
         <CircularProgress color="primary" style={{ marginBottom: "10px" }} />
         <Typography variant="body1" align="center">
           Loading...
@@ -100,7 +107,7 @@ function Detail() {
               ( {/* {product.reviews}  */} 1000 reviews)
             </Typography>
           </Box>
-      
+
           <Typography variant="body1" gutterBottom>
             {product.description}
           </Typography>
@@ -231,6 +238,11 @@ function Detail() {
               </Button>
             </Box>
           </Box>
+
+
+
+
+          
           <Divider sx={{ marginY: 2 }} />
           <Typography
             variant="h6"
@@ -297,8 +309,6 @@ function Detail() {
           style={{ width: "100%", height: "250px" }}
         />
       </Box>
-
-    
     </Container>
   );
 }
