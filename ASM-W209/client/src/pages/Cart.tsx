@@ -1,12 +1,25 @@
-import { Container, Stack, styled, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
 import Banner from "src/components/Banner";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useCart } from "src/contexts/cart";
+import { useProductCart } from "src/hooks/useProductCart";
+import { Link } from "react-router-dom";
 
 const labels = ["Product", "Price", "Quantity", "Subtotal", ""];
 function Cart() {
+  const { cart } = useCart();
+  const { removeToCart } = useProductCart();
+
   return (
     <>
-      <Banner />
+      <Banner page="Cart" />
       {/* Tieu de */}
       <Container>
         <Wrapper>
@@ -20,24 +33,40 @@ function Cart() {
                 {label}
               </Typography>
             ))}
-          </LabelWrapper> 
+          </LabelWrapper>
           {/* Cart Item */}
-          <Stack
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            <Stack direction={"row"} alignItems={"center"} gap={4}>
-              <img src="./product.png" />
-              <Typography fontWeight={500}>Asgaard sofa</Typography>
-            </Stack>
+          <Stack gap={3} my={3}>
+            {cart?.products.map((item, index) => (
+              <Stack
+                key={index}
+                direction={"row"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Stack direction={"row"} alignItems={"center"} gap={4}>
+                  <img src={item.product.image} width={"100px"} />
+                  <Typography fontWeight={500}>
+                    {item.product.title.substring(0, 10)}...
+                  </Typography>
+                </Stack>
 
-            <Typography fontWeight={500}>25.000.000đ</Typography>
-            <Typography fontWeight={500}>1</Typography>
-            <Typography fontWeight={500}>25.000.000đ</Typography>
-            <DeleteIcon />
+                <Typography fontWeight={500}>{item.product.price}đ</Typography>
+                <Typography fontWeight={500}>{item.quantity}</Typography>
+                <Typography fontWeight={500}>25.000.000đ</Typography>
+                <IconButton onClick={() => removeToCart(item.product._id)}>
+                  <DeleteIcon sx={{ color: "red" }} />
+                </IconButton>
+              </Stack>
+            ))}
           </Stack>
         </Wrapper>
+        <Stack alignItems={"center"}>
+          <Link to="/checkout">
+            <Button variant="contained" sx={{ mb: 10 }}>
+              Checkout
+            </Button>
+          </Link>
+        </Stack>
       </Container>
     </>
   );
@@ -46,10 +75,10 @@ function Cart() {
 export default Cart;
 
 const Wrapper = styled(Stack)({
-  paddingTop: 72,
+  padding: 72,
 });
 
-const LabelWrapper = styled(Stack)(({ theme }) => ({
-  background: theme.palette.primary.main,
+const LabelWrapper = styled(Stack)(() => ({
+  background: "#F9F1E7",
   height: 55,
 }));

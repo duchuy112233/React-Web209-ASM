@@ -9,6 +9,7 @@ import ClientLayout from "./layouts/ClientLayout";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
+import Checkout from "./pages/Checkout";
 
 const routeConfig = [
   {
@@ -52,6 +53,10 @@ const routeConfig = [
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

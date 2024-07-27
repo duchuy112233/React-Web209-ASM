@@ -28,6 +28,7 @@ const Login = () => {
     try {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
       nav("/");
     } catch (error) {}
   };

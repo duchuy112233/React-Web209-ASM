@@ -19,8 +19,8 @@ import { FlashDelete } from "src/components/Flash";
 import { useLoading } from "src/contexts/loading";
 import { Product } from "src/types/Product";
 import Pagination from "@mui/material/Pagination";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminProductList() {
   const { setLoading } = useLoading();
@@ -40,7 +40,7 @@ function AdminProductList() {
       if (axios.isAxiosError(error)) {
         toast.error(`Error: ${error.response?.data?.message || error.message}`);
       } else {
-        toast.error('An unexpected error occurred');
+        toast.error("An unexpected error occurred");
       }
     } finally {
       setLoading(false);
@@ -59,7 +59,7 @@ function AdminProductList() {
   const handleDelete = async () => {
     try {
       await axios.delete("/products/" + idDelete);
-//////show lash
+      //////show lash
       // setShowFlash(true);
       // setTimeout(() => {
       //   setShowFlash(false);
@@ -70,7 +70,7 @@ function AdminProductList() {
       if (axios.isAxiosError(error)) {
         toast.error(`Error: ${error.response?.data?.message || error.message}`);
       } else {
-        toast.error('An unexpected error occurred');
+        toast.error("An unexpected error occurred");
       }
     }
   };
@@ -80,7 +80,10 @@ function AdminProductList() {
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = products.slice(startIndex, endIndex);
 
-  const handleChangePage = (event: React.ChangeEvent<unknown>, newPage: number) => {
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 

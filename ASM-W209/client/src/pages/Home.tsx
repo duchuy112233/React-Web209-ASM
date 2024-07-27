@@ -14,7 +14,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Product } from "src/types/Product";
 import { Link } from "react-router-dom";
-import { Height, Margin, Padding } from "@mui/icons-material";
+import ProductCard from "src/components/ProductCard";
+import Loading from "src/components/Loading";
 
 import {
   MdHighQuality,
@@ -64,16 +65,20 @@ const styles = {
 
 function Home() {
   const [newProducts, setNewProducts] = useState<Product[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get("/products");
+
         // Assuming the products are already sorted by date, if not, sort them first
         const latestProducts = data.slice(0, 4); // Get the latest 4 products
         setNewProducts(latestProducts);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -82,7 +87,8 @@ function Home() {
 
   return (
     <>
-      <Banner />
+      <Loading isShow={loading} />
+      <Banner page="Home" />
       <Container>
         {/* New Products Section */}
         <Divider />
@@ -105,30 +111,13 @@ function Home() {
         />
         {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
         <Grid container spacing={4} justifyContent="center">
-          {newProducts.map((product) => (
+          {newProducts.map((product, index) => (
             <Grid item key={product._id} xs={12} sm={6} md={3}>
-              <Link
-                to={`/product/${product._id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <div style={styles.bg}>
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    style={styles.productImage}
-                  />
-                  <div style={styles.productInfo}>
-                    <Typography variant="h6" gutterBottom>
-                      {product.title}
-                    </Typography>
-                    <Typography>{product.price.toLocaleString()} đ</Typography>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard key={index} product={product} />
             </Grid>
           ))}
         </Grid>
-        ;
+
         {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
         <Divider
           sx={{
@@ -298,10 +287,7 @@ function Home() {
           </Typography>
         </Grid>
       </Grid>
-      ;
-    
-      {/* Footer */}
-
+      ;{/* Footer */}
     </>
   );
 }

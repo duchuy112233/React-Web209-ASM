@@ -1,8 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
+import { Cart } from "src/types/Product";
 
 interface CartContextType {
-  cart: number;
-  setCart: React.Dispatch<React.SetStateAction<number>>;
+  cart: Cart | null;
+  setCart: React.Dispatch<React.SetStateAction<Cart | null>>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -20,7 +21,7 @@ interface CartProviderProps {
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<number>(0);
+  const [cart, setCart] = useState<Cart | null>(null);
 
   return (
     <CartContext.Provider value={{ cart, setCart }}>
