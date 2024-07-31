@@ -40,7 +40,7 @@ function Checkout() {
   const { getCartUser } = useProductCart();
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogMessage, setDialogMessage] = useState('');
+  const [dialogMessage, setDialogMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(true);
 
   const totalPrice = useMemo(
@@ -53,7 +53,10 @@ function Checkout() {
   );
 
   const formatPrice = (price: number) =>
-    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -147,7 +150,7 @@ function Checkout() {
         />
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{isSuccess ? 'Thông báo' : 'Lỗi'}</DialogTitle>
+        <DialogTitle>{isSuccess ? "Thông báo" : "Lỗi"}</DialogTitle>
         <DialogContent>
           <Typography>{dialogMessage}</Typography>
         </DialogContent>
@@ -168,7 +171,7 @@ function Checkout() {
 
 export default Checkout;
 
-const StyledForm = styled('form')(({ theme }) => ({
+const StyledForm = styled("form")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: theme.shape.borderRadius,
@@ -176,13 +179,13 @@ const StyledForm = styled('form')(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  alignSelf: 'center',
+  alignSelf: "center",
   padding: theme.spacing(1.5, 4),
-  fontSize: '16px',
-  textTransform: 'uppercase',
+  fontSize: "16px",
+  textTransform: "uppercase",
   borderRadius: theme.shape.borderRadius,
   boxShadow: theme.shadows[2],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: theme.palette.primary.dark,
     boxShadow: theme.shadows[4],
   },

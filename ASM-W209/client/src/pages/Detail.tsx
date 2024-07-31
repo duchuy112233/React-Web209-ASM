@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -30,7 +31,7 @@ function Detail() {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function Detail() {
         setLoading(false);
       }
     };
-    
+
     fetchProduct();
   }, [productId]);
 
@@ -67,7 +68,7 @@ function Detail() {
   const handleCloseDialog = () => setOpenDialog(false);
   const handleGoToCart = () => {
     setOpenDialog(false);
-    nav('/cart');
+    nav("/cart");
   };
 
   if (loading) {
@@ -96,22 +97,36 @@ function Detail() {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h4" gutterBottom>{product.title}</Typography>
+            <Typography variant="h4" gutterBottom>
+              {product.title}
+            </Typography>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">{product.price.toLocaleString()} đ</Typography>
+              <Typography variant="body1">
+                {product.price.toLocaleString()} đ
+              </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
               <Typography variant="body1" sx={{ mr: 1 }}>
                 <Star sx={{ color: "#FFD700", mr: 0.5 }} /> 3
               </Typography>
               |
-              <Typography variant="body2" color="text.secondary">(1000 reviews)</Typography>
+              <Typography variant="body2" color="text.secondary">
+                (1000 reviews)
+              </Typography>
             </Box>
-            <Typography variant="body1" gutterBottom>{product.description}</Typography>
-            
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.8 }}>Size:</Typography>
+            <Typography variant="body1" gutterBottom>
+              {product.description}
+            </Typography>
+
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.8 }}
+            >
+              Size:
+            </Typography>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-              {["L", "XL", "XS"].map(size => (
+              {["L", "XL", "XS"].map((size) => (
                 <Tooltip key={size} title={`Size ${size}`}>
                   <IconButton
                     onClick={() => handleSizeClick(size)}
@@ -127,19 +142,43 @@ function Detail() {
               ))}
             </Box>
 
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.8 }}>Color:</Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.8 }}
+            >
+              Color:
+            </Typography>
             <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-              {["#FF8A80", "#A5D6A7", "#81D4FA"].map(color => (
+              {["#FF8A80", "#A5D6A7", "#81D4FA"].map((color) => (
                 <Tooltip key={color} title={`Color ${color}`}>
                   <IconButton sx={{ bgcolor: color }} />
                 </Tooltip>
               ))}
             </Box>
 
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.8 }}>Quantity:</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.8 }}
+            >
+              Quantity:
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <IconButton onClick={handleDecreaseQuantity} size="small" sx={{ border: "1px solid #ccc", borderRadius: 1 }}>-</IconButton>
+                <IconButton
+                  onClick={handleDecreaseQuantity}
+                  size="small"
+                  sx={{ border: "1px solid #ccc", borderRadius: 1 }}
+                >
+                  -
+                </IconButton>
                 <TextField
                   type="number"
                   value={quantity}
@@ -149,27 +188,69 @@ function Detail() {
                   fullWidth
                   variant="outlined"
                 />
-                <IconButton onClick={handleIncreaseQuantity} size="small" sx={{ border: "1px solid #ccc", borderRadius: 1 }}>+</IconButton>
+                <IconButton
+                  onClick={handleIncreaseQuantity}
+                  size="small"
+                  sx={{ border: "1px solid #ccc", borderRadius: 1 }}
+                >
+                  +
+                </IconButton>
               </Box>
-              <Button variant="contained" color="primary" onClick={handleAddToCart}>Add to Cart</Button>
-              <Button variant="outlined" color="primary" sx={{ ml: 1 }}>Compare</Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
+              <Button variant="outlined" color="primary" sx={{ ml: 1 }}>
+                Compare
+              </Button>
             </Box>
 
             <Divider sx={{ my: 2 }} />
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.3 }}>SKU:</Typography>
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.3 }}>Category: {product.category.name}</Typography>
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.3 }}>Tags:</Typography>
-            <Typography variant="h6" gutterBottom sx={{ fontSize: "15px", opacity: 0.3 }}>Share:</Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.3 }}
+            >
+              SKU:
+            </Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.3 }}
+            >
+              Category: {product.category.name}
+            </Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.3 }}
+            >
+              Tags:
+            </Typography>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontSize: "15px", opacity: 0.3 }}
+            >
+              Share:
+            </Typography>
           </Grid>
 
           <Divider sx={{ my: 6 }} />
         </Grid>
 
         <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-          <Typography variant="h6" sx={{ fontSize: "20px", mt: 2 }}>Desc</Typography>
-          <Typography variant="h6" sx={{ fontSize: "20px", mt: 2 }}>Review</Typography>
+          <Typography variant="h6" sx={{ fontSize: "20px", mt: 2 }}>
+            Desc
+          </Typography>
+          <Typography variant="h6" sx={{ fontSize: "20px", mt: 2 }}>
+            Review
+          </Typography>
         </Box>
-        
+
         <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
           <img
             src="https://noithatchungcu24h.com/wp-content/uploads/2016/07/CAM11.jpg"
@@ -190,13 +271,19 @@ function Detail() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Sản phẩm đã được thêm vào giỏ hàng</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          Sản phẩm đã được thêm vào giỏ hàng
+        </DialogTitle>
         <DialogContent>
           <Typography>Bạn có muốn đi đến giỏ hàng hoặc hủy bỏ?</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleGoToCart} color="primary">Đi đến giỏ hàng</Button>
-          <Button onClick={handleCloseDialog} color="secondary">Hủy bỏ</Button>
+          <Button onClick={handleGoToCart} color="primary">
+            Đi đến giỏ hàng
+          </Button>
+          <Button onClick={handleCloseDialog} color="secondary">
+            Hủy bỏ
+          </Button>
         </DialogActions>
       </Dialog>
     </>

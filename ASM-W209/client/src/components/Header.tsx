@@ -1,27 +1,17 @@
 import { Badge, Stack, styled, Typography } from "@mui/material";
+
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import { useCart } from "src/contexts/cart";
 import { useMemo } from "react";
 
 const menus = [
-  {
-    label: "Home",
-    link: "/",
-  },
-  {
-    label: "Shop",
-    link: "/shop",
-  },
-  {
-    label: "About",
-    link: "/about",
-  },
-  {
-    label: "Contact",
-    link: "/contact",
-  },
+  { label: "Home", link: "/" },
+  { label: "Shop", link: "/shop" },
+  { label: "About", link: "/about" },
+  { label: "Contact", link: "/contact" },
 ];
 
 const Header = () => {
@@ -48,6 +38,7 @@ const Header = () => {
 
       <Stack direction={"row"} gap={"75px"}>
         {/* menu */}
+
         {menus.map((menu, index) => (
           <Link to={menu.link} key={index}>
             <Typography fontWeight={"500"}>{menu.label}</Typography>
@@ -58,6 +49,7 @@ const Header = () => {
         <Link to={"/login"}>
           <img src="/user.svg" alt="user" />
         </Link>
+
         <SearchIcon />
         <FavoriteBorderIcon />
         <Link to={"/cart"}>
@@ -80,7 +72,9 @@ const Wrapper = styled(Stack)({
   left: 0,
   right: 0,
   background: "white",
+
   zIndex: 1100, // Đảm bảo nó nằm trên các phần tử khác
+
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
