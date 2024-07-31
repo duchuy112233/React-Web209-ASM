@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Checkout from "./pages/Checkout";
+import NotFound from "./pages/NotFound";
 
 const routeConfig = [
   {
@@ -57,6 +58,10 @@ const routeConfig = [
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "*", // Catch-all route for 404
+        element: <NotFound />,
       },
     ],
   },

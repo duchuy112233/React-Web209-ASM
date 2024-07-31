@@ -5,6 +5,7 @@ import { Field, Form } from "react-final-form";
 import { useNavigate } from "react-router-dom";
 import { InputText } from "src/components/elements/InputText";
 import { MIN_PASSWORD } from "src/consts";
+import { useProductCart } from "src/hooks/useProductCart";
 
 type LoginFormParams = {
   email: string;
@@ -13,14 +14,16 @@ type LoginFormParams = {
 
 const Login = () => {
   const nav = useNavigate();
+  const { getCartUser } = useProductCart();
+
   const validate = (values: LoginFormParams) => {
     const { email, password } = values;
     const errors: ValidationErrors = {};
-    if (!email) errors.email = "Email không được để trống";
+    if (!email) errors.email = "Can nhap email vao";
 
-    if (!password) errors.password = "Password không được để trống";
+    if (!password) errors.password = "Can nhap password vao";
     if (password && password.length < MIN_PASSWORD)
-      errors.password = `Password tối thiểu ${MIN_PASSWORD} ký tự`;
+      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
     return errors;
   };
 
@@ -28,7 +31,8 @@ const Login = () => {
     try {
       const { data } = await axios.post("/auth/login", values);
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user)); // luu object
+      localStorage.setItem("user", JSON.stringify(data.user));
+      getCartUser();
       nav("/");
     } catch (error) {}
   };

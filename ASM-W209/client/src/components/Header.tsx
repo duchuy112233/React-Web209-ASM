@@ -42,10 +42,10 @@ const Header = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-       <Link to={"/"}>
-          <img src="/logo.svg" alt="logo" />
-       </Link>
-   
+      <Link to={"/"}>
+        <img src="./public/LogoFur.jpg" width={250} alt="logo" />
+      </Link>
+
       <Stack direction={"row"} gap={"75px"}>
         {/* menu */}
         {menus.map((menu, index) => (
@@ -75,4 +75,13 @@ export default Header;
 const Wrapper = styled(Stack)({
   height: 100,
   padding: "0 50px",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  background: "white",
+  zIndex: 1100, // Đảm bảo nó nằm trên các phần tử khác
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
 });
