@@ -63,7 +63,7 @@ const Header = () => {
         {isLoggedIn ? (
           <div>
             <IconButton onClick={handleClick}>
-              <Typography>{user.username}</Typography>
+              <Typography  color="green">{user.username} !</Typography>
             </IconButton>
             <Menu
               anchorEl={anchorEl}

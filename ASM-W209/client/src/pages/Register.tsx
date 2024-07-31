@@ -1,4 +1,4 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography, Link as MuiLink } from "@mui/material";
 import axios from "axios";
 import { ValidationErrors } from "final-form";
 import { Field, Form } from "react-final-form";
@@ -17,12 +17,11 @@ const Register = () => {
   const validate = (values: RegisterFormParams) => {
     const { username, email, password } = values;
     const errors: ValidationErrors = {};
-    if (!username) errors.username = "Can nhap username vao";
-    if (!email) errors.email = "Can nhap email vao";
-  
-    if (!password) errors.password = "Can nhap password vao";
+    if (!username) errors.username = "Please enter your username";
+    if (!email) errors.email = "Please enter your email";
+    if (!password) errors.password = "Please enter your password";
     if (password && password.length < MIN_PASSWORD)
-      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
+      errors.password = `Password must be at least ${MIN_PASSWORD} characters long`;
     return errors;
   };
 
@@ -34,53 +33,57 @@ const Register = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h2" textAlign={"center"} mb={2}>
+    <Container maxWidth="xs" sx={{ mt: 4 }}>
+      <Typography variant="h4" textAlign="center" mb={2}>
         Register
       </Typography>
       <Form
         onSubmit={onSubmit}
         validate={validate}
-        render={({ values }) => {
-          return (
-            <Stack gap={2}>
-              <Field
-                name="username"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Username"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
-              <Field
-                name="email"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Email"}
-                    messageError={meta.touched && meta.error}
-                  />
-                )}
-              />
-              <Field
-                name="password"
-                render={({ input, meta }) => (
-                  <InputText
-                    input={input}
-                    label={"Password"}
-                    messageError={meta.touched && meta.error}
-                    type="password"
-                  />
-                )}
-              />
-              <Button variant="contained" onClick={() => onSubmit(values)}>
-                Submit
-              </Button>
-            </Stack>
-          );
-        }}
+        render={({ values }) => (
+          <Stack spacing={2}>
+            <Field
+              name="username"
+              render={({ input, meta }) => (
+                <InputText
+                  input={input}
+                  label="Username"
+                  messageError={meta.touched && meta.error}
+                />
+              )}
+            />
+            <Field
+              name="email"
+              render={({ input, meta }) => (
+                <InputText
+                  input={input}
+                  label="Email"
+                  messageError={meta.touched && meta.error}
+                />
+              )}
+            />
+            <Field
+              name="password"
+              render={({ input, meta }) => (
+                <InputText
+                  input={input}
+                  label="Password"
+                  messageError={meta.touched && meta.error}
+                  type="password"
+                />
+              )}
+            />
+            <Button variant="contained" onClick={() => onSubmit(values)}>
+              Submit
+            </Button>
+            <Typography variant="body2" textAlign="center">
+              Already have an account?{' '}
+              <MuiLink href="/login" variant="body2">
+                Login
+              </MuiLink>
+            </Typography>
+          </Stack>
+        )}
       />
     </Container>
   );
