@@ -52,24 +52,32 @@ const Header = () => {
         <img src="./public/LogoFur.jpg" width={250} alt="logo" />
       </Link>
 
-      <Stack direction={"row"} gap={"75px"}>
+      <Stack direction={"row"} spacing={5} alignItems={"center"}>
         {menus.map((menu, index) => (
           <Link to={menu.link} key={index}>
-            <Typography fontWeight={"500"}>{menu.label}</Typography>
+            <Typography fontWeight={"500"} color="textPrimary">
+              {menu.label}
+            </Typography>
           </Link>
         ))}
       </Stack>
-      <Stack gap={"45px"} direction={"row"}>
+      
+      <Stack direction={"row"} spacing={5} alignItems={"center"}>
         {isLoggedIn ? (
           <div>
-            <IconButton onClick={handleClick}>
-              <Typography  color="green">{user.username} !</Typography>
+            <IconButton onClick={handleClick} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography fontWeight={"bold"} color="green">
+                {user.username}
+              </Typography>
             </IconButton>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
+                <MenuItem onClick={() => navigate('/profile')}>
+                <Typography>View Profile</Typography>
+              </MenuItem>
               <MenuItem onClick={handleLogout}>
                 <LogoutIcon /> Logout
               </MenuItem>
