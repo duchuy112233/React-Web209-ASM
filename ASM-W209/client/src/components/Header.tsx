@@ -1,39 +1,45 @@
-import { Badge, Stack, styled, Typography } from "@mui/material";
+import { Badge, Stack, styled, Typography, Menu, MenuItem, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "src/contexts/cart";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const menus = [
-  {
-    label: "Home",
-    link: "/",
-  },
-  {
-    label: "Shop",
-    link: "/shop",
-  },
-  {
-    label: "About",
-    link: "/about",
-  },
-  {
-    label: "Contact",
-    link: "/contact",
-  },
+  { label: "Home", link: "/" },
+  { label: "Shop", link: "/shop" },
+  { label: "About", link: "/about" },
+  { label: "Contact", link: "/contact" },
 ];
 
 const Header = () => {
   const { cart } = useCart();
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const cartQuantity = useMemo(
-    () =>
-      cart
-        ? cart.products.reduce((total, { quantity }) => total + quantity, 0)
-        : 0,
+    () => (cart ? cart.products.reduce((total, { quantity }) => total + quantity, 0) : 0),
     [cart]
   );
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const isLoggedIn = !!user;
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+    handleClose();
+  };
 
   return (
     <Wrapper
@@ -47,7 +53,6 @@ const Header = () => {
       </Link>
 
       <Stack direction={"row"} gap={"75px"}>
-        {/* menu */}
         {menus.map((menu, index) => (
           <Link to={menu.link} key={index}>
             <Typography fontWeight={"500"}>{menu.label}</Typography>
@@ -55,9 +60,26 @@ const Header = () => {
         ))}
       </Stack>
       <Stack gap={"45px"} direction={"row"}>
-        <Link to={"/login"}>
-          <img src="/user.svg" alt="user" />
-        </Link>
+        {isLoggedIn ? (
+          <div>
+            <IconButton onClick={handleClick}>
+              <Typography>{user.username}</Typography>
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleLogout}>
+                <LogoutIcon /> Logout
+              </MenuItem>
+            </Menu>
+          </div>
+        ) : (
+          <Link to={"/login"}>
+            <img src="/user.svg" alt="user" />
+          </Link>
+        )}
         <SearchIcon />
         <FavoriteBorderIcon />
         <Link to={"/cart"}>
@@ -80,7 +102,7 @@ const Wrapper = styled(Stack)({
   left: 0,
   right: 0,
   background: "white",
-  zIndex: 1100, // Đảm bảo nó nằm trên các phần tử khác
+  zIndex: 1100,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

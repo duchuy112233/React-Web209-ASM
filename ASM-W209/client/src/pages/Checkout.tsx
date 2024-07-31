@@ -118,7 +118,7 @@ function Checkout() {
                   {({ input, meta }) => (
                     <InputText
                       input={input}
-                      label="Địa chỉ"
+                      label="Địa chỉ nhận hàng"
                       messageError={meta.touched && meta.error}
                     />
                   )}

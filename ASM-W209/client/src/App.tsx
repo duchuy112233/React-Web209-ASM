@@ -59,6 +59,7 @@ const routeConfig = [
         path: "checkout",
         element: <Checkout />,
       },
+
       {
         path: "*", // Catch-all route for 404
         element: <NotFound />,
