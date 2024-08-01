@@ -58,7 +58,7 @@ function Cart() {
                 fontWeight={500}
                 variant="h6"
                 color="textSecondary"
-                sx={{ flex: 1, textAlign: "center" }} // Căn giữa văn bản
+                sx={{ flex: 1, textAlign: "center" }} 
               >
                 {label}
               </Typography>
@@ -99,8 +99,8 @@ function Cart() {
                       flex: 1,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      whiteSpace: "normal", // Allow text to wrap
-                      wordBreak: "break-word", // Break long words if necessary
+                      whiteSpace: "normal", 
+                      wordBreak: "break-word", 
                     }}
                   >
                     {item.product.title}
@@ -179,7 +179,6 @@ const LabelWrapper = styled(Stack)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   boxShadow: theme.shadows[1],
   padding: theme.spacing(2),
-  // Căn chỉnh các tiêu đề theo cột
   flexDirection: "row",
   alignItems: "center",
   "& > *": {
