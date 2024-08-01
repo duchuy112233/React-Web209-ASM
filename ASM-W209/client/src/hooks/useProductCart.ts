@@ -45,7 +45,7 @@ export const useProductCart = () => {
   };
   const removeToCart = async (productId: string) => {
     if (!user) return;
-    if (window.confirm("Remove Item Cart")) {
+    if (window.confirm("Xóa sản phẩm")) {
       try {
         await axios.delete(`/carts/user/${user._id}/product/${productId}`);
         getCartUser();
