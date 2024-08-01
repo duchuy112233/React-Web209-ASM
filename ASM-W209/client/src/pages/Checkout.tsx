@@ -74,11 +74,11 @@ function Checkout() {
         totalPrice,
       });
       await getCartUser();
-      setDialogMessage("Checkout thành công. Bạn có muốn quay về trang chính?");
+      setDialogMessage("Checkout thành công. Bạn có muốn quay về trang chính ?");
       setIsSuccess(true);
     } catch (error) {
       console.error(error);
-      setDialogMessage("Có lỗi xảy ra. Vui lòng thử lại.");
+      setDialogMessage("Có lỗi xảy ra. Vui lòng thử lại .");
       setIsSuccess(false);
     } finally {
       setLoading(false);
@@ -150,7 +150,7 @@ function Checkout() {
         />
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{isSuccess ? "Thông báo" : "Lỗi"}</DialogTitle>
+        <DialogTitle>{isSuccess ? " Thông báo " : " Lỗi "}</DialogTitle>
         <DialogContent>
           <Typography>{dialogMessage}</Typography>
         </DialogContent>
