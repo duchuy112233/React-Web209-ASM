@@ -42,7 +42,7 @@ const Register = () => {
   };
 
   return (
-    <Container maxWidth="xs" sx={{ mt: 4 }}>
+    <Container maxWidth="xs" sx={{ mt: 10 }}>
       <Typography variant="h4" textAlign="center" mb={2}>
         Register
       </Typography>

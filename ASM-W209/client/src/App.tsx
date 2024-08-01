@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import Profile from "./components/Profile";
 
 const routeConfig = [
   {
@@ -58,6 +59,10 @@ const routeConfig = [
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
 
       {

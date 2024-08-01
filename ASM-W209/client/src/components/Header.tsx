@@ -41,10 +41,13 @@ const Header = () => {
 
         {menus.map((menu, index) => (
           <Link to={menu.link} key={index}>
-            <Typography fontWeight={"500"}>{menu.label}</Typography>
+            <Typography fontWeight={"500"} color="textPrimary">
+              {menu.label}
+            </Typography>
           </Link>
         ))}
       </Stack>
+
       <Stack gap={"45px"} direction={"row"}>
         <Link to={"/login"}>
           <img src="/user.svg" alt="user" />
