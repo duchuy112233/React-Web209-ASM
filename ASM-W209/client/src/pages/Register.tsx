@@ -24,12 +24,12 @@ const Register = () => {
     const { username, email, password } = values;
     const errors: ValidationErrors = {};
 
-    if (!username) errors.username = "Can nhap username vao";
-    if (!email) errors.email = "Can nhap email vao";
+    if (!username) errors.username = "Cần nhập uername vào ";
+    if (!email) errors.email = "Cần nhập email vào";
 
-    if (!password) errors.password = "Can nhap password vao";
+    if (!password) errors.password = "Cần nhập pasword vào";
     if (password && password.length < MIN_PASSWORD)
-      errors.password = `Can nhap password toi thieu ${MIN_PASSWORD} ky tu`;
+      errors.password = `Cần nhập password tối thiểu ${MIN_PASSWORD} ký tự`;
 
     return errors;
   };
